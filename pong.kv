@@ -1,0 +1,29 @@
+<PongGame>:
+    background_color: 0, 0, 0, 1
+    blue: 16/255, 66/255, 224/255, 1
+    orange: 211/255, 84/255, 0, 1
+    canvas:
+        Color:
+            rgba: root.blue
+        Rectangle:
+            pos: 0, 0
+            size: self.width, self.height
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            pos: 10, 10
+            size: self.width - 20, self.height - 20
+
+    Label:
+        color: root.orange
+        font_size: 60
+        center_x: root.width / 4
+        top: root.top - 50
+        text: "0"
+
+    Label:
+        color: root.orange
+        font_size: 60
+        center_x: root.width * 3 / 4
+        top: root.top - 50
+        text: "0"
