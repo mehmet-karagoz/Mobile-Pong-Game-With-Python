@@ -18,6 +18,14 @@ class PongGame(Widget):
         self.player1.bounce_ball(self.ball)
         self.player2.bounce_ball(self.ball)
 
+        # score
+        if self.ball.y < self.y:
+            self.player2.score += 1
+            self.serve_ball(vel=(0, 4))
+        if self.ball.y > self.height - 20:
+            self.player1.score += 1
+            self.serve_ball(vel=(0, -4))
+
         # set the limits to which the ball can go
         # for y coordinate
         if self.ball.y < 0 or self.ball.top > self.height:
@@ -26,23 +34,15 @@ class PongGame(Widget):
         if self.ball.x < 0 or self.ball.right > self.width:
             self.ball.velocity_x *= -1
 
-        # score
-        if self.ball.x < self.x:
-            self.player2.score += 1
-            self.serve_ball(vel=(3, 0))
-        if self.ball.x > self.width - 20:
-            self.player1.score += 1
-            self.serve_ball(vel=(-3, 0))
-
-    def serve_ball(self, vel=(3, 0)):
+    def serve_ball(self, vel=(0, 4)):
         self.ball.center = self.center
         self.ball.velocity = vel
 
     def on_touch_move(self, touch):
-        if touch.x < self.width / 3:
-            self.player1.center_y = touch.y
-        if touch.x > self.width - self.width / 3:
-            self.player2.center_y = touch.y
+        if touch.y < self.height / 3:
+            self.player1.center_x = touch.x
+        if touch.y > self.height - self.height / 3:
+            self.player2.center_x = touch.x
 
 
 class Ball(Widget):
@@ -61,14 +61,15 @@ class PongPaddle(Widget):
     def bounce_ball(self, ball):
         if self.collide_widget(ball):
             vx, vy = ball.velocity
-            offset = (ball.center_y - self.center_y) / (self.height / 2)
-            vx *= -1.1
-            vy *= 1.1
+            offset = (ball.center_x - self.center_x) / (self.width / 2)
+            vx *= 1.15
+            vy *= -1.15
             ball.velocity = vx, vy + offset
 
 
 class PongApp(App):
     def build(self):
+        self.icon = "icon.png"
         game = PongGame()
         game.serve_ball()
         Clock.schedule_interval(game.update, 1.0 / 60.0)

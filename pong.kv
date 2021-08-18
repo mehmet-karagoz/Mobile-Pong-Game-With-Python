@@ -19,20 +19,20 @@
         Color:
             rgba: root.blue
         Rectangle:
-            pos: self.center_x - 5, 0
-            size: 10, self.height
+            pos: 0, self.center_y
+            size: self.width, 10
 
     Label:
         color: root.orange
         font_size: 40
         center_x: root.width / 4
-        top: root.top - 50
+        top: root.height / 4
         text: str(root.player1.score)
 
     Label:
         color: root.orange
         font_size: 40
-        center_x: root.width * 3 / 4
+        center_x: root.width / 4
         top: root.top - 50
         text: str(root.player2.score)
 
@@ -42,13 +42,13 @@
 
     PongPaddle:
         id: player_left
-        x: root.x
-        center_y: root.center_y
+        x: root.center_x
+        center_y: 15
 
     PongPaddle:
         id: player_right
-        x: root.width - self.width
-        center_y: root.center_y
+        x: root.center_x
+        center_y: root.height - 15
 
 <Ball>:
     red: 1, 0, 0, 1
@@ -61,7 +61,7 @@
             size: self.size
 
 <PongPaddle>:
-    size: 15, 200
+    size: 200, 15
     canvas:
         Rectangle:
             pos: self.pos
